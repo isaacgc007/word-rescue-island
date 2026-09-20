@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#0b5d74"/>
+  <circle cx="386" cy="120" r="62" fill="#ffd85c"/>
+  <path d="M78 382c71-16 127-73 166-170 88 57 132 162 70 224-59 59-190 35-236-54Z" fill="#65d6a6"/>
+  <path d="M115 397c76-63 132-124 173-186" fill="none" stroke="#083f52" stroke-width="32" stroke-linecap="round"/>
+  <path d="M291 184c31 4 65 15 91 33-24 4-54 15-78 31" fill="none" stroke="#083f52" stroke-width="25" stroke-linecap="round"/>
+  <path d="M145 326c1-34-7-64-24-91 32 11 63 31 84 52" fill="none" stroke="#083f52" stroke-width="25" stroke-linecap="round"/>
+  <text x="256" y="330" text-anchor="middle" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="150" font-weight="900" fill="#fff">W</text>
+</svg>
