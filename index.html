@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#0b5d74">
+  <meta name="description" content="A cheerful spelling adventure for young English learners.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Word Rescue">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b5d74'/%3E%3Cpath d='M18 42c10-3 18-13 21-24 7 8 8 20 2 28-6 8-18 7-23-4Z' fill='%23ffd85c'/%3E%3Cpath d='M21 42c7-5 13-11 18-20' fill='none' stroke='%230b5d74' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="./assets/app-icon.svg">
+  <title>Word Rescue Island</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar">
+      <button class="brand" id="homeButton" type="button" aria-label="Return to the island map">
+        <span class="brand-mark" aria-hidden="true">W</span>
+        <span><strong>Word Rescue</strong><small>ISLAND ADVENTURE</small></span>
+      </button>
+      <div class="topbar-progress" aria-label="Adventure progress">
+        <span class="counter"><span aria-hidden="true">⭐</span><strong id="starCount">0</strong><small>rescued</small></span>
+        <span class="counter"><span aria-hidden="true">💎</span><strong id="gemCount">0</strong><small>gems</small></span>
+        <button class="round-button" id="soundButton" type="button" aria-label="Turn sound off">🔊</button>
+        <button class="round-button" id="settingsButton" type="button" aria-label="Open grown-up settings">⚙️</button>
+      </div>
+    </header>
+
+    <main class="game-shell">
+      <section class="screen map-screen active" id="mapScreen" aria-labelledby="mapTitle">
+        <div class="map-copy">
+          <p class="eyebrow">YOUR ADVENTURE MAP</p>
+          <h1 id="mapTitle"><span id="mapGreeting">Hello, Explorer!</span> Where shall we go?</h1>
+          <p>Rescue words to open new paths across the island.</p>
+        </div>
+
+        <div class="island-map" id="islandMap">
+          <img src="./assets/word-rescue-island.png" alt="A bright magical island with a beach, forest, mountain and castle">
+          <div class="map-shade" aria-hidden="true"></div>
+          <div class="zone-pins" id="zonePins"></div>
+          <div class="map-legend">
+            <span><i class="legend-dot ready"></i>Ready</span>
+            <span><i class="legend-dot locked"></i>Locked</span>
+          </div>
+        </div>
+
+        <div class="map-footer">
+          <div class="guide-message">
+            <span class="guide-avatar" aria-hidden="true">🦜</span>
+            <div><strong id="guideTitle">Pip has a message!</strong><p id="guideText">Begin at Sunny Shore and rescue your first five words.</p></div>
+          </div>
+          <button class="secondary-button hidden" id="customPracticeButton" type="button">✨ Practice my words</button>
+        </div>
+      </section>
+
+      <section class="screen quest-screen" id="questScreen" aria-labelledby="questTitle">
+        <div class="quest-bar">
+          <button class="back-button" id="leaveQuestButton" type="button">← Map</button>
+          <div class="quest-name"><span id="questIcon" aria-hidden="true">🏝️</span><div><small id="questWorld">SUNNY SHORE</small><strong id="questTitle">Rescue Quest</strong></div></div>
+          <div class="quest-step"><span id="questionNumber">1 of 5</span><div class="mini-progress"><i id="questProgress"></i></div></div>
+        </div>
+
+        <div class="challenge-layout">
+          <aside class="companion-card" aria-label="Your guide Pip">
+            <div class="companion" id="companion" aria-hidden="true">🦜</div>
+            <div class="speech-bubble" id="speechBubble">Listen carefully, then build the word!</div>
+            <div class="combo-badge hidden" id="comboBadge">🔥 <strong>2</strong> word streak!</div>
+          </aside>
+
+          <article class="word-card" id="wordCard">
+            <div class="word-card-top">
+              <span class="difficulty" id="difficultyLabel">WARM-UP WORD</span>
+              <button class="listen-button" id="listenButton" type="button"><span aria-hidden="true">🔊</span> Hear the word</button>
+            </div>
+            <div class="picture-clue" id="pictureClue" aria-hidden="true">🐱</div>
+            <p class="clue" id="clueText">A small pet that says meow.</p>
+            <div class="letter-slots" id="letterSlots" aria-label="Your spelling"></div>
+            <p class="hint-line" id="hintLine" aria-live="polite">Tap the letters in the right order.</p>
+            <div class="letter-tray" id="letterTray" aria-label="Available letters"></div>
+            <div class="challenge-actions">
+              <button class="text-button" id="clearButton" type="button">Clear</button>
+              <button class="primary-button" id="checkButton" type="button" disabled>Check word</button>
+            </div>
+          </article>
+
+          <aside class="quest-treasure" aria-label="Quest rewards">
+            <span class="tiny-label">QUEST TREASURE</span>
+            <div class="chest" id="chest" aria-hidden="true">🧰</div>
+            <strong><span id="questRescued">0</span> / 5 words</strong>
+            <div class="rescue-dots" id="rescueDots" aria-hidden="true"></div>
+          </aside>
+        </div>
+
+        <div class="success-banner hidden" id="successBanner" role="status">
+          <div class="success-icon" aria-hidden="true">✨</div>
+          <div><small>WORD RESCUED!</small><strong id="successWord">CAT</strong><p id="successAction">A kitten skips onto the sand!</p></div>
+          <button class="primary-button" id="nextButton" type="button">Next word →</button>
+        </div>
+        <div class="confetti" id="confetti" aria-hidden="true"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="welcomeModal" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+    <div class="modal welcome-card">
+      <span class="welcome-island" aria-hidden="true">🏝️</span>
+      <p class="eyebrow">A SPELLING ADVENTURE</p>
+      <h2 id="welcomeTitle">The island’s words<br>have been scrambled!</h2>
+      <p>Pip the parrot needs your help. Listen, build each word, and bring the island back to life.</p>
+      <label class="name-field">What should Pip call you?<input id="playerNameInput" maxlength="16" autocomplete="off" placeholder="Explorer"></label>
+      <button class="primary-button large" id="startAdventureButton" type="button">Start the adventure <span>→</span></button>
+      <small>No timer. No adverts. Just play and learn.</small>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal settings-card">
+      <button class="modal-close" id="closeSettingsButton" type="button" aria-label="Close settings">×</button>
+      <p class="eyebrow">GROWN-UP CORNER</p>
+      <h2 id="settingsTitle">Adventure settings</h2>
+      <div class="settings-grid">
+        <label>Explorer’s name<input id="settingsName" maxlength="16"></label>
+        <label>Speaking voice<select id="voiceAccent"><option value="en-GB">British English</option><option value="en-US">American English</option></select></label>
+      </div>
+      <label class="custom-words">Add school words <small>Separate words with commas or new lines.</small><textarea id="customWordsInput" rows="4" placeholder="because, favourite, tomorrow"></textarea></label>
+      <div class="settings-note"><span>📱</span><p><strong>Make it feel like an app</strong><br>In Safari, tap Share and then “Add to Home Screen”.</p></div>
+      <div class="settings-actions">
+        <button class="danger-text" id="resetProgressButton" type="button">Reset progress</button>
+        <button class="primary-button" id="saveSettingsButton" type="button">Save changes</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="completeModal" role="dialog" aria-modal="true" aria-labelledby="completeTitle">
+    <div class="modal complete-card">
+      <div class="open-chest" aria-hidden="true">🎁</div>
+      <p class="eyebrow">QUEST COMPLETE</p>
+      <h2 id="completeTitle">Five words rescued!</h2>
+      <p id="completeMessage">Sunny Shore is sparkling again.</p>
+      <div class="reward-row">
+        <div><span>⭐</span><strong id="earnedStars">+5</strong><small>new words</small></div>
+        <div><span>💎</span><strong id="earnedGems">+5</strong><small>gems found</small></div>
+        <div><span>🔥</span><strong id="bestCombo">5</strong><small>best streak</small></div>
+      </div>
+      <div class="complete-actions">
+        <button class="secondary-button" id="replayButton" type="button">Play again</button>
+        <button class="primary-button" id="returnMapButton" type="button">Explore the map →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast hidden" id="toast" role="status"></div>
+  <script src="./game.js" defer></script>
+</body>
+</html>

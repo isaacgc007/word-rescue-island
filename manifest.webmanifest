@@ -1,0 +1,12 @@
+{
+  "name": "Word Rescue Island",
+  "short_name": "Word Rescue",
+  "description": "A cheerful spelling adventure for young English learners.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#eaf9f4",
+  "theme_color": "#0b5d74",
+  "icons": [
+    { "src": "./assets/app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
